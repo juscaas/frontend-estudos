@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,9 +9,9 @@
     <style>
         /* --- CSS:Define a aparência e o layout --- */
 
-        body{
-            background-color: #0f172a; /* Cor de fundo escura */
-            color: #f8fafc; /* code de texto clara */
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
             font-family: sans-serif;
             display: flex;
             flex-direction: column;
@@ -21,15 +21,12 @@
 
         /* Configuração do Grid da Tabela */
 
-        .tabela.periodica {
+        .tabela-periodica {
             display: grid;
             grid-template-columns: repeat(18, 1fr);
-            grid-template-columns: repeat(7, 88px);
             gap: 5px;
             width: 100%;
             max-width: 1000px;
-
-
         }
 
         .elemento {
@@ -52,12 +49,92 @@
             transform: scale(1.2);
             z-index: 10;
             border-color: #38bdf8;
-            
         }
 
+        .simbolo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .numero {
+            font-size: 0.7rem;
+            color: #94a3b8;
+        }
+
+        /*Estilização do painel onde as informações aparecem*/
+        #detalhes {
+            margin-top: 30px;
+            padding: 15px;
+            border: 2px solid #38bdfb;
+            border-radius: 8px;
+            min-width: 300px;
+            text-align: center;
+        }
     </style>
 </head>
+
 <body>
-    
+
+    <h1>Tabela Periódica Interativa</h1>
+
+    <div class="tabela-periodica">
+        <div class="elemento" style="--col: 1; --row: 1;" data-nome="Hidrogenio" data-massa="1.008">
+            <span class="numero">1</span>
+            <span class="simbolo">H</span>
+        </div>
+
+        <div class="elemento" style="--col: 18; --row: 1;" data-nome="Helio" data-massa="4.002">
+            <span class="numero">2</span>
+            <span class="símbolo">He</span>
+        </div>
+
+        <div class="elemento" style="--col: 1; --row: 4;" data-nome="Potássio" data-massa="39.098">
+            <span class="numero">19</span>
+            <span class="símbolo">K</span>
+        </div>
+
+        <div class="elemento" style="--col: 8; --row: 4;" data-nome="Ferro" data-massa="55.845">
+            <span class="numero">26</span>
+            <span class="símbolo">Fe</span>
+        </div>
+    </div>
+
+    <div id="detalhes">Passe o mouse sobre o elemento!</div>
+
+    <script>
+
+        /* --- Javascript: Controla a interatividade*/
+
+        //1.Selecionamos todos os elementos químicos da página
+
+        const blocos = document.querySelectorAll('.elemento');
+
+        //2. Selecionamos a caixa onde o texto vai aparecer
+        const caixaInfo = document.getElementById('detalhes');
+
+        //3. Para cada elemento, adicionamos uma "escuta" de evento
+        blocos.forEach(item => {
+
+            //Quando o mouse entra no quadro
+            item.addEventListener('mouseenter', () => {
+                // Pegamos os valores que guardamos nos atributos 'data'
+                const nome = item.getAttribute('data-nome');
+                const massa = item.getAttribute('data-massa');
+
+                // Atualizamos o texto na caixa de detalhes
+                caixaInfo.innerHTML = `<strong>${nome}</strong> - Massa: ${massa}`;
+
+            });
+
+            //Quando mouse sai do quadro
+            item.addEventListener('mouseleave', () => {
+                caixaInfo.innerText = "Passe o mouse sobre o elemento!";
+            });
+
+        });
+
+    </script>
+
 </body>
+
 </html>
